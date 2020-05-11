@@ -1,0 +1,478 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Configuration &#8212; kafka-connect 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Excamples" href="examples.html" />
+    <link rel="prev" title="Intro" href="intro.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="configuration">
+<h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="nettysourceconnector">
+<h2>NettySourceConnector<a class="headerlink" href="#nettysourceconnector" title="Permalink to this headline">¶</a></h2>
+<p>The Source Connector will receive data from network and write to kafka a
+topic.</p>
+<div class="highlight-properties notranslate"><div class="highlight"><pre><span></span><span class="na">name</span><span class="o">=</span><span class="s">nettyConnector</span>
+<span class="na">tasks.max</span><span class="o">=</span><span class="s">1</span>
+<span class="na">connector.class</span><span class="o">=</span><span class="s">com.mckesson.kafka.connect.nettysource.NettySourceConnector</span>
+<span class="na">topic</span><span class="o">=</span><span class="s">network_data</span>
+
+<span class="c"># Set these required values</span>
+<span class="na">transport.protocol</span><span class="o">=</span><span class="s">TCP</span>
+<span class="na">port</span><span class="o">=</span><span class="s">1234</span>
+</pre></div>
+</div>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 14%" />
+<col style="width: 16%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>De
+scription</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>I
+mportance</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>bin
+d.address</p></td>
+<td><p>Bind
+address</p></td>
+<td><p>string</p></td>
+<td><p>0.0.0.0</p></td>
+<td><p>high</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>transport
+.protocol</p></td>
+<td><p>Transport
+level
+protocol</p></td>
+<td><p>string</p></td>
+<td><p>tcp</p></td>
+<td><p>high</p></td>
+<td><p>allowed
+values:
+<strong>tcp</strong>,
+<strong>udp</strong></p></td>
+</tr>
+<tr class="row-even"><td><p>port</p></td>
+<td><p>Listening
+port</p></td>
+<td><p>int</p></td>
+<td></td>
+<td><p>high</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>pipe
+line.fact
+ory.class</p></td>
+<td><p>Class
+name
+imp
+lementing
+<code class="docutils literal notranslate"><span class="pre">org</span>
+<span class="pre">.jboss.ne</span>
+<span class="pre">tty.chann</span>
+<span class="pre">el.Channe</span>
+<span class="pre">lPipeline</span>
+<span class="pre">Factory</span></code></p></td>
+<td><p>class</p></td>
+<td><p>depends
+on
+protocol</p></td>
+<td><p>high</p></td>
+<td><p>for tcp:
+<code class="docutils literal notranslate"><span class="pre">com.</span>
+<span class="pre">mckesson.</span>
+<span class="pre">kafka.con</span>
+<span class="pre">nect.nett</span>
+<span class="pre">ysource.D</span>
+<span class="pre">efaultTcp</span>
+<span class="pre">PipelineF</span>
+<span class="pre">actory</span></code>,
+for udp:
+<code class="docutils literal notranslate"><span class="pre">com.</span>
+<span class="pre">mckesson.</span>
+<span class="pre">kafka.con</span>
+<span class="pre">nect.nett</span>
+<span class="pre">ysource.D</span>
+<span class="pre">efaultUdp</span>
+<span class="pre">PipelineF</span>
+<span class="pre">actory</span></code>.
+See below
+conf
+iguration
+options
+for the
+factories</p></td>
+</tr>
+<tr class="row-even"><td><p>ports</p></td>
+<td><p>Listening
+ports</p></td>
+<td><p>list</p></td>
+<td></td>
+<td><p>medium</p></td>
+<td><p>same as
+‘
+<code class="docutils literal notranslate"><span class="pre">port</span></code>’
+but
+multiply
+ports can
+be
+s
+pecified,
+used if
+port is
+already
+in use</p></td>
+</tr>
+<tr class="row-odd"><td><p>h
+ealthchec
+k.enabled</p></td>
+<td><p>Enable
+he
+althcheck
+listener</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>medium</p></td>
+<td><p>Enable
+listening
+tcp port
+for
+he
+althcheck
+purpose.
+Useful
+when
+<code class="docutils literal notranslate"><span class="pre">transp</span>
+<span class="pre">ort.proto</span>
+<span class="pre">col=udp</span></code>
+and
+loa
+dbalancer
+c
+onfigured
+in front
+of kafka
+connect.</p></td>
+</tr>
+<tr class="row-even"><td><p>health
+check.bin
+d.address</p></td>
+<td><p>Bind
+address
+for
+he
+althcheck</p></td>
+<td><p>string</p></td>
+<td><p>0.0.0.0</p></td>
+<td><p>medium</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>healthc
+heck.port</p></td>
+<td><p>Listening
+port for
+he
+althcheck</p></td>
+<td><p>int</p></td>
+<td></td>
+<td><p>medium</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>healthch
+eck.ports</p></td>
+<td><p>Listening
+ports for
+he
+althcheck</p></td>
+<td><p>list</p></td>
+<td></td>
+<td><p>medium</p></td>
+<td><p>same as
+‘
+<code class="docutils literal notranslate"><span class="pre">port</span></code>’
+but
+multiply
+ports can
+be
+s
+pecified.
+used if
+port is
+already
+in use</p></td>
+</tr>
+<tr class="row-odd"><td><p>ss
+l.enabled</p></td>
+<td><p>Enable
+SSL/TLS</p></td>
+<td><p>boolean</p></td>
+<td><p>false</p></td>
+<td><p>medium</p></td>
+<td><p>can be
+used for
+<code class="docutils literal notranslate"><span class="pre">transp</span>
+<span class="pre">ort.proto</span>
+<span class="pre">col=tcp</span></code>
+only. See
+below for
+the
+available
+options</p></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="ssl-configuration-options">
+<h3>SSL configuration options<a class="headerlink" href="#ssl-configuration-options" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 13%" />
+<col style="width: 15%" />
+<col style="width: 20%" />
+<col style="width: 12%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+<th class="head"><p>D
+escription</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Default</p></th>
+<th class="head"><p>Importance</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ss
+l.protocol</p></td>
+<td><p>The SSL
+protocol
+used to
+generate
+the
+S
+SLContext.</p></td>
+<td><p>string</p></td>
+<td><p>TLS</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>ssl.key
+store.type</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>s
+sl.keystor
+e.location</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>s
+sl.keystor
+e.password</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>ssl
+.key.alias</p></td>
+<td><p>key alias
+for JKS</p></td>
+<td><p>string</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>ssl.ke
+y.password</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>ssl.trust
+store.type</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>ssl
+.truststor
+e.location</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>ssl
+.truststor
+e.password</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div><p>see <code class="docutils literal notranslate"><span class="pre">org.apache.kafka.common.config.SslConfigs</span></code> for more
+comprehensive description of above params</p>
+</div></blockquote>
+</div>
+<div class="section" id="pipelinefactory-configuration-options">
+<h3>PipelineFactory configuration options<a class="headerlink" href="#pipelinefactory-configuration-options" title="Permalink to this headline">¶</a></h3>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Name</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">kafka-connect</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../general/about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../general/links.html">Links</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Netty Source Connector</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Intro</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Excamples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Pollable Source Connector</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../pollable_source/intro.html">Intro</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pollable_source/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pollable_source/examples.html">Examples</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">&lt;no title&gt;</a><ul>
+      <li>Previous: <a href="intro.html" title="previous chapter">Intro</a></li>
+      <li>Next: <a href="examples.html" title="next chapter">Excamples</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2020, Vitalii Rudenskyi.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/netty_source/config.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
